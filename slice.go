@@ -13,7 +13,7 @@ func String(items interface{}, fn func(i int) string) []string {
 	return result
 }
 
-func Int64(items interface{}, fn func(i int) string) []int64 {
+func Int64(items interface{}, fn func(i int) int64) []int64 {
 	rv := reflect.ValueOf(items)
 	size := rv.Len()
 	result := make([]int64, size)
@@ -24,7 +24,7 @@ func Int64(items interface{}, fn func(i int) string) []int64 {
 	return result
 }
 
-func Int(items interface{}, fn func(i int) string) []int {
+func Int(items interface{}, fn func(i int) int) []int {
 	rv := reflect.ValueOf(items)
 	size := rv.Len()
 	result := make([]int, size)
