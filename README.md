@@ -6,7 +6,7 @@ This is boring:
 ids := make([]int64, 0, len(items))
 
 for _, item := range items {
-	ids == append(ids, item.Id)
+	ids = append(ids, item.Id)
 }
 ```
 
