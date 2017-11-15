@@ -166,3 +166,58 @@ func intUniqueFor(size int, fn func(i int) int) []int {
 	}
 	return result
 }
+
+func Int32(items interface{}, fn func(i int) int32) []int32 {
+	rv := reflect.ValueOf(items)
+	size := rv.Len()
+	result := make([]int32, size)
+
+	for i := 0; i < size; i++ {
+		result[i] = fn(i)
+	}
+	return result
+}
+
+func Int32Unique(items interface{}, fn func(i int) int32) []int32 {
+	rv := reflect.ValueOf(items)
+	size := rv.Len()
+
+	if size < 512 {
+		return int32UniqueFor(size, fn)
+	}
+
+	return int32UniqueMap(size, fn)
+}
+
+func int32UniqueMap(size int, fn func(i int) int32) []int32 {
+	result := make([]int32, 0, size)
+	checkMap := make(map[int32]bool)
+
+	for i := 0; i < size; i++ {
+		item := fn(i)
+		if _, ok := checkMap[item]; !ok {
+			result = append(result, item)
+			checkMap[item] = true
+		}
+	}
+	return result
+}
+
+func int32UniqueFor(size int, fn func(i int) int32) []int32 {
+	result := make([]int32, 0, size)
+
+	for i := 0; i < size; i++ {
+		item := fn(i)
+		found := false
+		for _, existingItem := range result {
+			if item == existingItem {
+				found = true
+				break
+			}
+		}
+		if !found {
+			result = append(result, item)
+		}
+	}
+	return result
+}
